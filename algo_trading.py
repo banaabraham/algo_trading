@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Sep 25 23:04:23 2017
-
-@author: lenovo
-"""
 import pandas as pd
 import urllib
 from sklearn.svm import SVR
@@ -121,8 +115,6 @@ def enablePrint():
     sys.stdout = sys.__stdout__
 
 blockPrint()
-
-
 
 def optimize(stock):
     x = range(-100,-150,-5)
