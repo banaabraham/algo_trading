@@ -5,7 +5,7 @@ import numpy as np
 import talib
 from matplotlib import pyplot as plt
 from sklearn.svm import SVR
-import sys,os
+import sys, os
 
 class algo_trading(object):
     
@@ -88,10 +88,22 @@ class algo_trading(object):
             else:
                 pass   
         
-        if buy[-1]>sell[-1]:
-            del buy[-1]
-            del sell[-1]
-            del activity[-1]
+        # Ensure trade lists are balanced. It's possible to end the loop with a
+        # buy that was never sold, which previously raised an IndexError when
+        # trying to access ``sell[-1]``. Drop any unmatched trades along with
+        # their associated fees and activity markers.
+        while len(buy) > len(sell):
+            buy.pop()
+            if fee:
+                fee.pop()
+            if activity:
+                activity.pop()
+        while len(sell) > len(buy):
+            sell.pop()
+            if fee:
+                fee.pop()
+            if activity:
+                activity.pop()
         
             
         trading = len(buy)+len(sell)    
